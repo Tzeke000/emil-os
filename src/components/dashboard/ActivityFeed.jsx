@@ -24,7 +24,7 @@ export default function ActivityFeed({ activities }) {
                   <p className="text-xs font-medium truncate">{a.action}</p>
                   <p className="text-xs text-muted-foreground">
                     {a.related_entity_name && `${a.related_entity_name} · `}
-                    {format(new Date(a.created_date), "MMM d, h:mm a")}
+                    {a.created_date ? format(new Date(a.created_date), "MMM d, h:mm a") : ""}
                   </p>
                 </div>
               </div>
