@@ -1,0 +1,66 @@
+{
+  "name": "Proposal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "proposal_type": {
+      "type": "string",
+      "enum": [
+        "new_module",
+        "model_change",
+        "rule_update",
+        "memory_change",
+        "system_improvement",
+        "other"
+      ]
+    },
+    "problem_noticed": {
+      "type": "string"
+    },
+    "proposed_change": {
+      "type": "string"
+    },
+    "why_it_matters": {
+      "type": "string"
+    },
+    "estimated_token_savings": {
+      "type": "number"
+    },
+    "model_suggestion": {
+      "type": "string"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "approved",
+        "rejected",
+        "implemented"
+      ],
+      "default": "draft"
+    },
+    "review_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "proposal_type",
+    "status"
+  ]
+}

@@ -16,6 +16,14 @@ import Memory from './pages/Memory';
 import Playbooks from './pages/Playbooks';
 import Approvals from './pages/Approvals';
 import AgentSettingsPage from './pages/AgentSettingsPage';
+import TruthSync from './pages/TruthSync';
+import ModuleBuilder from './pages/ModuleBuilder';
+import ModelRouter from './pages/ModelRouter';
+import TaskOrchestrator from './pages/TaskOrchestrator';
+import MemoryBrowser from './pages/MemoryBrowser';
+import MemoryMigration from './pages/MemoryMigration';
+import Workbench from './pages/Workbench';
+import ArchiveExplorer from './pages/ArchiveExplorer';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -49,6 +57,14 @@ const AuthenticatedApp = () => {
         <Route path="/playbooks" element={<Playbooks />} />
         <Route path="/approvals" element={<Approvals />} />
         <Route path="/settings" element={<AgentSettingsPage />} />
+        <Route path="/truth-sync" element={<TruthSync />} />
+        <Route path="/modules" element={<ModuleBuilder />} />
+        <Route path="/model-router" element={<ModelRouter />} />
+        <Route path="/tasks" element={<TaskOrchestrator />} />
+        <Route path="/memory-browser" element={<MemoryBrowser />} />
+        <Route path="/memory-migration" element={<MemoryMigration />} />
+        <Route path="/workbench" element={<Workbench />} />
+        <Route path="/archive" element={<ArchiveExplorer />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

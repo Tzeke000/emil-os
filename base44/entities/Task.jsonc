@@ -1,0 +1,74 @@
+{
+  "name": "Task",
+  "type": "object",
+  "properties": {
+    "task_name": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "assigned_model": {
+      "type": "string"
+    },
+    "parent_task": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "waiting",
+        "blocked",
+        "completed",
+        "failed",
+        "escalated"
+      ],
+      "default": "queued"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result_summary": {
+      "type": "string"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "denied"
+      ]
+    },
+    "error_notes": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "task_name",
+    "state"
+  ]
+}

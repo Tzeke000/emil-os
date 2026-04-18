@@ -1,0 +1,66 @@
+{
+  "name": "MemoryMigration",
+  "type": "object",
+  "properties": {
+    "old_memory_title": {
+      "type": "string"
+    },
+    "old_memory_id": {
+      "type": "string"
+    },
+    "current_relevance": {
+      "type": "string",
+      "enum": [
+        "still_relevant",
+        "partially_relevant",
+        "outdated",
+        "unknown"
+      ]
+    },
+    "suggested_destination": {
+      "type": "string",
+      "enum": [
+        "active_memory",
+        "current_state",
+        "soul",
+        "identity",
+        "playbook",
+        "archive_only"
+      ]
+    },
+    "merge_conflict_note": {
+      "type": "string"
+    },
+    "rewritten_version": {
+      "type": "string"
+    },
+    "copy_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "final_destination": {
+      "type": "string",
+      "enum": [
+        "active_memory",
+        "current_state",
+        "soul",
+        "identity",
+        "playbook",
+        "archive_only"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_review",
+        "approved",
+        "rejected",
+        "completed"
+      ]
+    }
+  },
+  "required": [
+    "old_memory_title",
+    "status"
+  ]
+}

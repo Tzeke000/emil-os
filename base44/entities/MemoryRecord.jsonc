@@ -1,0 +1,72 @@
+{
+  "name": "MemoryRecord",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "memory_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "memory_type": {
+      "type": "string",
+      "enum": [
+        "reflection",
+        "decision",
+        "insight",
+        "event",
+        "rule",
+        "observation",
+        "distilled",
+        "raw"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "importance": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "noise"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "archived",
+        "stale",
+        "durable",
+        "migrated"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "full_content": {
+      "type": "string"
+    },
+    "linked_project": {
+      "type": "string"
+    },
+    "is_durable": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "memory_type"
+  ]
+}

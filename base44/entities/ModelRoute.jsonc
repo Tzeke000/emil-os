@@ -1,0 +1,39 @@
+{
+  "name": "ModelRoute",
+  "type": "object",
+  "properties": {
+    "module_name": {
+      "type": "string"
+    },
+    "default_model": {
+      "type": "string"
+    },
+    "fallback_model": {
+      "type": "string"
+    },
+    "use_case": {
+      "type": "string"
+    },
+    "max_context": {
+      "type": "number"
+    },
+    "token_saving_mode": {
+      "type": "boolean",
+      "default": false
+    },
+    "escalation_rule": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "module_name",
+    "default_model"
+  ]
+}

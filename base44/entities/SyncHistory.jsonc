@@ -1,0 +1,44 @@
+{
+  "name": "SyncHistory",
+  "type": "object",
+  "properties": {
+    "file_name": {
+      "type": "string"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "pull",
+        "push",
+        "merge",
+        "compare"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "conflict",
+        "error",
+        "partial"
+      ]
+    },
+    "changed_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "initiated_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "file_name",
+    "direction",
+    "status"
+  ]
+}

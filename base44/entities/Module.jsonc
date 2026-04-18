@@ -1,0 +1,70 @@
+{
+  "name": "Module",
+  "type": "object",
+  "properties": {
+    "module_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "input_type": {
+      "type": "string"
+    },
+    "output_type": {
+      "type": "string"
+    },
+    "trigger_condition": {
+      "type": "string"
+    },
+    "assigned_model": {
+      "type": "string"
+    },
+    "fallback_model": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "token_budget": {
+      "type": "number"
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "times_run": {
+      "type": "number",
+      "default": 0
+    },
+    "avg_tokens_used": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "module_name"
+  ]
+}

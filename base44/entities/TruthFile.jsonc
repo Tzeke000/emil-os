@@ -1,0 +1,66 @@
+{
+  "name": "TruthFile",
+  "type": "object",
+  "properties": {
+    "file_name": {
+      "type": "string",
+      "description": "e.g. soul, identity, user, current_state"
+    },
+    "file_type": {
+      "type": "string",
+      "enum": [
+        "soul",
+        "identity",
+        "user",
+        "current_state",
+        "playbook",
+        "memory_index",
+        "custom"
+      ],
+      "description": "Type of truth file"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full content of the file"
+    },
+    "app_version": {
+      "type": "string",
+      "description": "Current version in this app (may differ from file)"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last sync timestamp"
+    },
+    "sync_status": {
+      "type": "string",
+      "enum": [
+        "synced",
+        "pending",
+        "conflict",
+        "never_synced",
+        "error"
+      ],
+      "default": "never_synced"
+    },
+    "changed_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fields changed since last sync"
+    },
+    "conflict_notes": {
+      "type": "string",
+      "description": "Conflict details if any"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "file_name",
+    "file_type"
+  ]
+}
