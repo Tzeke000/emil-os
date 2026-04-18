@@ -3,7 +3,7 @@ import {
   LayoutDashboard, Users, FileText, Inbox, Brain,
   GitBranch, ShieldCheck, Settings, ChevronLeft, ChevronRight,
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
-  GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap
+  GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -29,6 +29,7 @@ const SECTIONS = [
       { path: "/triggers", icon: Zap, label: "Triggers", countKey: "triggers" },
       { path: "/modules", icon: Cpu, label: "Modules" },
       { path: "/model-router", icon: Router, label: "Model Router" },
+      { path: "/logs", icon: Terminal, label: "Runtime Logs", countKey: "errors" },
     ]
   },
   {
@@ -56,6 +57,7 @@ export default function Sidebar() {
   const [collapsedSections, setCollapsedSections] = useState({});
 
   const { data: triggerIntegrations = [] } = useQuery({ queryKey: ["triggerIntegrations"], queryFn: () => base44.entities.TriggerIntegration.list("-created_date", 20), staleTime: 60000 });
+  const { data: runtimeLogs = [] } = useQuery({ queryKey: ["runtimeLogs"], queryFn: () => base44.entities.RuntimeLog.list("-created_date", 50), staleTime: 10000 });
   const { data: replies = [] } = useQuery({ queryKey: ["replies"], queryFn: () => base44.entities.Reply.list("-created_date", 50), staleTime: 30000 });
   const { data: approvals = [] } = useQuery({ queryKey: ["approvals"], queryFn: () => base44.entities.Approval.list("-created_date", 50), staleTime: 30000 });
   const { data: tasks = [] } = useQuery({ queryKey: ["tasks"], queryFn: () => base44.entities.Task.list("-created_date", 100), staleTime: 30000 });
@@ -71,6 +73,7 @@ export default function Sidebar() {
     conflicts: truthFiles.filter(f => f.sync_status === "conflict").length,
     migrations: migrations.filter(m => m.status === "pending_review").length,
     proposals: proposals.filter(p => p.status === "pending_review").length,
+    errors: runtimeLogs.filter(l => l.level === "error").length,
   };
 
   const toggleSection = (label) => setCollapsedSections(p => ({ ...p, [label]: !p[label] }));

@@ -1,0 +1,64 @@
+{
+  "name": "RuntimeLog",
+  "type": "object",
+  "properties": {
+    "level": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "debug"
+      ],
+      "description": "Log severity level"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "ollama",
+        "task_orchestrator",
+        "trigger",
+        "memory",
+        "system"
+      ],
+      "description": "Which subsystem emitted this log"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Related task ID if applicable"
+    },
+    "task_name": {
+      "type": "string",
+      "description": "Related task name for display"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module that was executing"
+    },
+    "model": {
+      "type": "string",
+      "description": "Ollama model involved if any"
+    },
+    "message": {
+      "type": "string",
+      "description": "Log message body"
+    },
+    "details": {
+      "type": "string",
+      "description": "Extended details, stack trace, or payload snippet"
+    },
+    "tokens_used": {
+      "type": "number",
+      "description": "Token count if applicable"
+    },
+    "duration_ms": {
+      "type": "number",
+      "description": "Execution duration in ms"
+    }
+  },
+  "required": [
+    "level",
+    "source",
+    "message"
+  ]
+}
