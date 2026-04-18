@@ -1,0 +1,68 @@
+{
+  "name": "WebhookDelivery",
+  "type": "object",
+  "properties": {
+    "trigger_id": {
+      "type": "string",
+      "description": "Related TriggerIntegration ID"
+    },
+    "trigger_name": {
+      "type": "string",
+      "description": "Trigger name for display"
+    },
+    "source_type": {
+      "type": "string",
+      "description": "Source type e.g. zapier, make"
+    },
+    "inbound_payload": {
+      "type": "string",
+      "description": "Raw JSON of the inbound payload received"
+    },
+    "response_body": {
+      "type": "string",
+      "description": "Raw JSON body Emil returned to the caller"
+    },
+    "response_status": {
+      "type": "number",
+      "description": "HTTP status code returned"
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "filtered",
+        "retry_pending",
+        "retried"
+      ],
+      "description": "Final delivery outcome"
+    },
+    "task_created_id": {
+      "type": "string",
+      "description": "Task ID that was spawned (if any)"
+    },
+    "task_created_name": {
+      "type": "string",
+      "description": "Task name spawned"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error detail if failed"
+    },
+    "duration_ms": {
+      "type": "number",
+      "description": "Processing time in ms"
+    },
+    "retry_count": {
+      "type": "number",
+      "default": 0
+    },
+    "webhook_slug": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trigger_id",
+    "delivery_status"
+  ]
+}

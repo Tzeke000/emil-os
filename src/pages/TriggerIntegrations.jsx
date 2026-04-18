@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Zap, Copy, Play, Pencil, CheckCircle2, XCircle, Clock, ChevronRight, Globe, Mail, FileInput } from "lucide-react";
+import { Plus, Zap, Copy, Play, Pencil, CheckCircle2, XCircle, Clock, ChevronRight, Globe, Mail, FileInput, RefreshCw, AlertTriangle, Filter } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { toast } from "sonner";
 
@@ -39,7 +40,16 @@ function generateSlug(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Math.random().toString(36).substring(2, 6);
 }
 
+const DELIVERY_STATUS_META = {
+  success:       { color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20", icon: CheckCircle2 },
+  failed:        { color: "text-red-400",     bg: "bg-red-500/10 border-red-500/20",         icon: XCircle },
+  filtered:      { color: "text-muted-foreground", bg: "bg-muted/30 border-border",          icon: Filter },
+  retry_pending: { color: "text-amber-400",   bg: "bg-amber-500/10 border-amber-500/20",     icon: Clock },
+  retried:       { color: "text-sky-400",     bg: "bg-sky-500/10 border-sky-500/20",         icon: RefreshCw },
+};
+
 export default function TriggerIntegrations() {
+  const [activeTab, setActiveTab] = useState("triggers");
   const [showCreate, setShowCreate] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -48,6 +58,10 @@ export default function TriggerIntegrations() {
   const [testPayload, setTestPayload] = useState('{\n  "source": "website_form",\n  "email": "dr.smith@example.com",\n  "score": 75\n}');
   const [testResult, setTestResult] = useState(null);
   const [testLoading, setTestLoading] = useState(false);
+  const [expandedDelivery, setExpandedDelivery] = useState(null);
+  const [deliverySourceFilter, setDeliverySourceFilter] = useState("all");
+  const [deliveryStatusFilter, setDeliveryStatusFilter] = useState("all");
+  const [retryingId, setRetryingId] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: triggers = [] } = useQuery({
@@ -58,6 +72,12 @@ export default function TriggerIntegrations() {
   const { data: modules = [] } = useQuery({
     queryKey: ["modules"],
     queryFn: () => base44.entities.Module.list("-created_date", 50),
+  });
+
+  const { data: deliveries = [] } = useQuery({
+    queryKey: ["webhookDeliveries"],
+    queryFn: () => base44.entities.WebhookDelivery.list("-created_date", 200),
+    refetchInterval: activeTab === "deliveries" ? 5000 : false,
   });
 
   const createMutation = useMutation({
@@ -132,8 +152,27 @@ export default function TriggerIntegrations() {
     toast.success("Webhook URL copied");
   };
 
+  const handleRetry = async (delivery) => {
+    setRetryingId(delivery.id);
+    try {
+      await base44.functions.invoke("retryWebhookDelivery", { delivery_id: delivery.id });
+      queryClient.invalidateQueries({ queryKey: ["webhookDeliveries"] });
+      toast.success("Retry dispatched");
+    } catch (e) {
+      toast.error("Retry failed: " + e.message);
+    }
+    setRetryingId(null);
+  };
+
   const activeCount = triggers.filter(t => t.is_active).length;
   const totalFires = triggers.reduce((a, t) => a + (t.trigger_count || 0), 0);
+  const failedDeliveries = deliveries.filter(d => d.delivery_status === "failed").length;
+
+  const filteredDeliveries = deliveries.filter(d => {
+    if (deliverySourceFilter !== "all" && d.source_type !== deliverySourceFilter) return false;
+    if (deliveryStatusFilter !== "all" && d.delivery_status !== deliveryStatusFilter) return false;
+    return true;
+  });
 
   return (
     <div className="p-6 max-w-6xl">
@@ -148,12 +187,180 @@ export default function TriggerIntegrations() {
           <p className="text-sm text-muted-foreground mt-0.5">
             <span className="font-mono text-foreground">{activeCount}</span> active triggers ·{" "}
             <span className="font-mono text-foreground">{totalFires}</span> total fires
+            {failedDeliveries > 0 && (
+              <> · <span className="text-red-400 font-mono">{failedDeliveries} failed deliveries</span></>
+            )}
           </p>
         </div>
         <Button size="sm" onClick={() => { setForm(EMPTY_FORM); setShowCreate(true); }} className="gap-1.5">
           <Plus className="w-4 h-4" /> New Trigger
         </Button>
       </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-1 mb-5 border-b border-border">
+        {[
+          { key: "triggers", label: "Triggers" },
+          { key: "deliveries", label: "Delivery Log", badge: failedDeliveries > 0 ? failedDeliveries : null },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={cn(
+              "flex items-center gap-1.5 px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors",
+              activeTab === tab.key
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {tab.label}
+            {tab.badge && (
+              <span className="text-xs font-bold font-mono bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded-full leading-none">
+                {tab.badge}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* ── DELIVERIES TAB ─────────────────────────────────────── */}
+      {activeTab === "deliveries" && (
+        <div>
+          {/* Filter bar */}
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            <div className="flex items-center gap-1.5">
+              {["all", "success", "failed", "filtered", "retried"].map(s => (
+                <button key={s} onClick={() => setDeliveryStatusFilter(s)}
+                  className={cn("px-2.5 py-1 rounded text-xs font-mono capitalize transition-colors",
+                    deliveryStatusFilter === s ? "bg-primary/15 text-primary" : "text-muted-foreground hover:text-foreground bg-muted/30"
+                  )}>
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1.5 ml-4">
+              {["all", ...SOURCE_TYPES].map(s => (
+                <button key={s} onClick={() => setDeliverySourceFilter(s)}
+                  className={cn("px-2 py-1 rounded text-xs font-mono capitalize transition-colors",
+                    deliverySourceFilter === s ? "bg-primary/15 text-primary" : "text-muted-foreground/60 hover:text-muted-foreground"
+                  )}>
+                  {s.replace(/_/g," ")}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Delivery rows */}
+          <div className="border border-border rounded-xl overflow-hidden bg-card divide-y divide-border/60">
+            {filteredDeliveries.length === 0 && (
+              <div className="text-center py-16 text-sm text-muted-foreground font-mono">— no delivery records —</div>
+            )}
+            {filteredDeliveries.map(d => {
+              const statusMeta = DELIVERY_STATUS_META[d.delivery_status] || DELIVERY_STATUS_META.success;
+              const StatusIcon = statusMeta.icon;
+              const srcMeta = SOURCE_META[d.source_type] || SOURCE_META.other;
+              const isExpanded = expandedDelivery === d.id;
+              const canRetry = d.delivery_status === "failed";
+
+              return (
+                <div key={d.id}>
+                  <div
+                    className="flex items-center gap-4 px-5 py-3 hover:bg-muted/10 cursor-pointer group"
+                    onClick={() => setExpandedDelivery(isExpanded ? null : d.id)}
+                  >
+                    {/* Status icon */}
+                    <StatusIcon className={cn("w-4 h-4 flex-shrink-0", statusMeta.color)} />
+
+                    {/* Source badge */}
+                    <span className={cn("text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded border flex-shrink-0", srcMeta.bg, srcMeta.color)}>
+                      {d.source_type?.replace(/_/g," ")}
+                    </span>
+
+                    {/* Trigger name + task */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-foreground truncate">{d.trigger_name || d.webhook_slug}</p>
+                      {d.task_created_name && (
+                        <p className="text-xs text-muted-foreground/60 font-mono mt-0.5 truncate">→ {d.task_created_name}</p>
+                      )}
+                      {d.error_message && (
+                        <p className="text-xs text-red-400/80 mt-0.5 truncate font-mono">{d.error_message}</p>
+                      )}
+                    </div>
+
+                    {/* Meta right */}
+                    <div className="flex items-center gap-4 flex-shrink-0 text-xs font-mono text-muted-foreground">
+                      {d.response_status && (
+                        <span className={cn(d.response_status >= 400 ? "text-red-400" : "text-emerald-400")}>
+                          HTTP {d.response_status}
+                        </span>
+                      )}
+                      {d.duration_ms > 0 && <span>{d.duration_ms}ms</span>}
+                      {d.retry_count > 0 && <span className="text-amber-400">{d.retry_count} retries</span>}
+                      <span className="text-muted-foreground/40">
+                        {d.created_date ? new Date(d.created_date).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—"}
+                      </span>
+                      <span className={cn("px-2 py-0.5 rounded border text-xs", statusMeta.bg, statusMeta.color)}>
+                        {d.delivery_status}
+                      </span>
+                    </div>
+
+                    {/* Retry button */}
+                    {canRetry && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-7 text-xs gap-1 text-amber-400 border-amber-500/30 hover:bg-amber-500/10 flex-shrink-0"
+                        onClick={e => { e.stopPropagation(); handleRetry(d); }}
+                        disabled={retryingId === d.id}
+                      >
+                        {retryingId === d.id
+                          ? <RefreshCw className="w-3 h-3 animate-spin" />
+                          : <RefreshCw className="w-3 h-3" />}
+                        Retry
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Expanded raw bodies */}
+                  {isExpanded && (
+                    <div className="px-5 pb-4 bg-muted/5 border-t border-border/40 grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold mt-3 mb-1.5">Inbound Payload</p>
+                        <pre className="text-xs bg-muted/40 border border-border rounded px-3 py-2.5 font-mono whitespace-pre-wrap overflow-auto max-h-48 text-muted-foreground">
+                          {(() => { try { return JSON.stringify(JSON.parse(d.inbound_payload || "{}"), null, 2); } catch { return d.inbound_payload || "—"; } })()}
+                        </pre>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold mt-3 mb-1.5">
+                          Response Body <span className="text-muted-foreground/40 normal-case tracking-normal font-normal">(what Emil returned)</span>
+                        </p>
+                        <pre className="text-xs bg-muted/40 border border-border rounded px-3 py-2.5 font-mono whitespace-pre-wrap overflow-auto max-h-48 text-muted-foreground">
+                          {(() => { try { return JSON.stringify(JSON.parse(d.response_body || "{}"), null, 2); } catch { return d.response_body || "—"; } })()}
+                        </pre>
+                        {canRetry && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="mt-2 gap-1.5 text-amber-400 border-amber-500/30 hover:bg-amber-500/10"
+                            onClick={() => handleRetry(d)}
+                            disabled={retryingId === d.id}
+                          >
+                            {retryingId === d.id ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+                            Retry this delivery
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── TRIGGERS TAB ───────────────────────────────────────── */}
+      {activeTab === "triggers" && <>
 
       {/* How it works strip */}
       <div className="bg-primary/5 border border-primary/20 rounded-xl px-5 py-4 mb-5 text-sm">
@@ -232,6 +439,8 @@ export default function TriggerIntegrations() {
           );
         })}
       </div>
+
+      </> /* end triggers tab */}
 
       {/* Test panel modal */}
       <Dialog open={!!selected} onOpenChange={() => { setSelected(null); setTestResult(null); }}>
