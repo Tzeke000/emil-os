@@ -3,7 +3,7 @@ import {
   LayoutDashboard, Users, FileText, Inbox, Brain,
   GitBranch, ShieldCheck, Settings, ChevronLeft, ChevronRight,
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
-  GitMerge, Wrench, Archive, ChevronDown, ChevronUp
+  GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -26,6 +26,7 @@ const SECTIONS = [
     label: "Runtime",
     items: [
       { path: "/tasks", icon: ListTodo, label: "Tasks", countKey: "tasks" },
+      { path: "/triggers", icon: Zap, label: "Triggers", countKey: "triggers" },
       { path: "/modules", icon: Cpu, label: "Modules" },
       { path: "/model-router", icon: Router, label: "Model Router" },
     ]
@@ -54,6 +55,7 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState({});
 
+  const { data: triggerIntegrations = [] } = useQuery({ queryKey: ["triggerIntegrations"], queryFn: () => base44.entities.TriggerIntegration.list("-created_date", 20), staleTime: 60000 });
   const { data: replies = [] } = useQuery({ queryKey: ["replies"], queryFn: () => base44.entities.Reply.list("-created_date", 50), staleTime: 30000 });
   const { data: approvals = [] } = useQuery({ queryKey: ["approvals"], queryFn: () => base44.entities.Approval.list("-created_date", 50), staleTime: 30000 });
   const { data: tasks = [] } = useQuery({ queryKey: ["tasks"], queryFn: () => base44.entities.Task.list("-created_date", 100), staleTime: 30000 });
@@ -65,6 +67,7 @@ export default function Sidebar() {
     inbox: replies.filter(r => r.status === "new").length,
     approvals: approvals.filter(a => a.status === "pending").length,
     tasks: tasks.filter(t => ["running","blocked","escalated"].includes(t.state)).length,
+    triggers: triggerIntegrations.filter(t => t.is_active).length,
     conflicts: truthFiles.filter(f => f.sync_status === "conflict").length,
     migrations: migrations.filter(m => m.status === "pending_review").length,
     proposals: proposals.filter(p => p.status === "pending_review").length,

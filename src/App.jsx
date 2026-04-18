@@ -24,6 +24,7 @@ import MemoryBrowser from './pages/MemoryBrowser';
 import MemoryMigration from './pages/MemoryMigration';
 import Workbench from './pages/Workbench';
 import ArchiveExplorer from './pages/ArchiveExplorer';
+import TriggerIntegrations from './pages/TriggerIntegrations';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -65,6 +66,7 @@ const AuthenticatedApp = () => {
         <Route path="/memory-migration" element={<MemoryMigration />} />
         <Route path="/workbench" element={<Workbench />} />
         <Route path="/archive" element={<ArchiveExplorer />} />
+        <Route path="/triggers" element={<TriggerIntegrations />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

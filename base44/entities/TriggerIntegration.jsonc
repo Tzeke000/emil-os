@@ -1,0 +1,112 @@
+{
+  "name": "TriggerIntegration",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for this trigger"
+    },
+    "description": {
+      "type": "string"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "email_provider",
+        "website_form",
+        "zapier",
+        "make",
+        "typeform",
+        "custom_webhook",
+        "other"
+      ],
+      "description": "Where the inbound signal comes from"
+    },
+    "webhook_slug": {
+      "type": "string",
+      "description": "Unique slug used in the webhook URL path"
+    },
+    "secret_token": {
+      "type": "string",
+      "description": "Optional bearer token for auth validation"
+    },
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "task",
+        "module"
+      ],
+      "description": "What gets triggered"
+    },
+    "target_module": {
+      "type": "string",
+      "description": "Module name to invoke (if target_type=module)"
+    },
+    "task_template": {
+      "type": "object",
+      "description": "Task fields to create when triggered (if target_type=task)",
+      "properties": {
+        "task_name_template": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "assigned_model": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        }
+      }
+    },
+    "payload_mapping": {
+      "type": "array",
+      "description": "Map inbound payload fields to task/context fields",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_field": {
+            "type": "string"
+          },
+          "target_field": {
+            "type": "string"
+          },
+          "transform": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "filter_condition": {
+      "type": "string",
+      "description": "Optional JS-style condition to gate the trigger, e.g. payload.score > 50"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "last_triggered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "trigger_count": {
+      "type": "number",
+      "default": 0
+    },
+    "last_payload_preview": {
+      "type": "string",
+      "description": "Snippet of the last received payload"
+    }
+  },
+  "required": [
+    "name",
+    "source_type",
+    "webhook_slug",
+    "target_type"
+  ]
+}
