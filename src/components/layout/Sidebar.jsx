@@ -4,7 +4,7 @@ import {
   GitBranch, ShieldCheck, Settings, ChevronLeft, ChevronRight,
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
   GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal,
-  Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked
+  Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked, GitCommit
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -50,9 +50,10 @@ const SECTIONS = [
       { path: "/workbench",    icon: Wrench,   label: "Workbench",   countKey: "proposals" },
       { path: "/modules",      icon: Cpu,      label: "Modules" },
       { path: "/model-router", icon: Router,   label: "Model Router" },
-      { path: "/triggers",     icon: Zap,      label: "Triggers" },
-      { path: "/logs",         icon: Terminal, label: "Logs" },
-      { path: "/settings",     icon: Settings, label: "Settings" },
+      { path: "/evolution",    icon: GitCommit, label: "Evolution Log" },
+      { path: "/triggers",     icon: Zap,       label: "Triggers" },
+      { path: "/logs",         icon: Terminal,  label: "Logs" },
+      { path: "/settings",     icon: Settings,  label: "Settings" },
     ]
   }
 ];

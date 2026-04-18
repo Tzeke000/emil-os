@@ -31,6 +31,7 @@ import MindStatePage from './pages/MindStatePage';
 import ReflectionsPage from './pages/ReflectionsPage';
 import RelationshipProfilePage from './pages/RelationshipProfilePage';
 import PreferencesPage from './pages/PreferencesPage';
+import EvolutionLogPage from './pages/EvolutionLogPage';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -79,6 +80,7 @@ const AuthenticatedApp = () => {
         <Route path="/reflections" element={<ReflectionsPage />} />
         <Route path="/relationship" element={<RelationshipProfilePage />} />
         <Route path="/preferences" element={<PreferencesPage />} />
+        <Route path="/evolution" element={<EvolutionLogPage />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

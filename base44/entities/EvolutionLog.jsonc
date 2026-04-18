@@ -1,0 +1,141 @@
+{
+  "name": "EvolutionLog",
+  "type": "object",
+  "properties": {
+    "change_id": {
+      "type": "string",
+      "description": "Short unique human-readable ID e.g. CHG-0042"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "create_page",
+        "edit_page",
+        "delete_page",
+        "create_module",
+        "edit_module",
+        "delete_module",
+        "create_field",
+        "edit_field",
+        "delete_field",
+        "schema_change",
+        "layout_change",
+        "routing_change",
+        "prompt_template_change",
+        "playbook_change",
+        "memory_rule_change",
+        "dashboard_change",
+        "settings_change"
+      ]
+    },
+    "area_affected": {
+      "type": "string",
+      "enum": [
+        "identity",
+        "memory",
+        "outreach",
+        "pipeline",
+        "runtime",
+        "system",
+        "dashboard",
+        "triggers",
+        "reflections",
+        "relationship",
+        "preferences",
+        "other"
+      ]
+    },
+    "entity_affected": {
+      "type": "string",
+      "description": "Entity, page, or module name affected"
+    },
+    "reason_for_change": {
+      "type": "string",
+      "enum": [
+        "obsolete",
+        "replaced_by_better_version",
+        "reduced_token_waste",
+        "simplified_workflow",
+        "merged_duplicate_systems",
+        "improved_clarity",
+        "no_longer_useful",
+        "improved_execution",
+        "bug_fix",
+        "new_capability",
+        "user_request",
+        "other"
+      ]
+    },
+    "reason_notes": {
+      "type": "string",
+      "description": "Free-text explanation of why"
+    },
+    "old_snapshot": {
+      "type": "string",
+      "description": "JSON snapshot of the old state"
+    },
+    "new_snapshot": {
+      "type": "string",
+      "description": "JSON snapshot of the new state"
+    },
+    "replaced_something": {
+      "type": "boolean",
+      "default": false
+    },
+    "replaced_what": {
+      "type": "string",
+      "description": "What was replaced (name/ID)"
+    },
+    "replaced_by_id": {
+      "type": "string",
+      "description": "ID of the new record that replaced the old one"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "low"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleted_by": {
+      "type": "string"
+    },
+    "deletion_reason": {
+      "type": "string"
+    },
+    "rollback_snapshot_id": {
+      "type": "string",
+      "description": "ID of a snapshot that can be used to restore prior state"
+    },
+    "is_rolled_back": {
+      "type": "boolean",
+      "default": false
+    },
+    "rolled_back_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "change_type",
+    "area_affected",
+    "entity_affected",
+    "reason_for_change"
+  ]
+}

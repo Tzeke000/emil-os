@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import StatusBadge from "../components/shared/StatusBadge";
 import PresencePanel from "../components/dashboard/PresencePanel";
+import EvolutionWidget from "../components/dashboard/EvolutionWidget";
 
 function getNextBestAction(prospects, replies, approvals) {
   const pendingApprovals = approvals.filter(a => a.status === "pending");
@@ -198,6 +199,9 @@ export default function Dashboard() {
           </div>
         </WidgetPanel>
       )}
+
+      {/* Evolution Widget */}
+      <EvolutionWidget />
 
       {/* Recent reflections */}
       {recentReflections.length > 0 && (
