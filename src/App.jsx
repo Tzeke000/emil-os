@@ -39,6 +39,8 @@ import PlaybookExpander from './pages/PlaybookExpander';
 import TaskBatcher from './pages/TaskBatcher';
 import ReadMe from './pages/ReadMe';
 import Analytics from './pages/Analytics';
+import EmilChat from './pages/EmilChat';
+import ABTesting from './pages/ABTesting';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -95,6 +97,8 @@ const AuthenticatedApp = () => {
         <Route path="/task-batcher" element={<TaskBatcher />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/readme" element={<ReadMe />} />
+        <Route path="/chat" element={<EmilChat />} />
+        <Route path="/ab-testing" element={<ABTesting />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

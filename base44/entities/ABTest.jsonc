@@ -1,0 +1,125 @@
+{
+  "name": "ABTest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Test name"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this test is evaluating"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "completed"
+      ],
+      "default": "draft",
+      "description": "Current test status"
+    },
+    "template_a_id": {
+      "type": "string",
+      "description": "Control template ID"
+    },
+    "template_a_name": {
+      "type": "string",
+      "description": "Control template name"
+    },
+    "template_b_id": {
+      "type": "string",
+      "description": "Variant template ID"
+    },
+    "template_b_name": {
+      "type": "string",
+      "description": "Variant template name"
+    },
+    "sends_a": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of sends for template A"
+    },
+    "sends_b": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of sends for template B"
+    },
+    "replies_a": {
+      "type": "number",
+      "default": 0,
+      "description": "Replies received for template A"
+    },
+    "replies_b": {
+      "type": "number",
+      "default": 0,
+      "description": "Replies received for template B"
+    },
+    "conversions_a": {
+      "type": "number",
+      "default": 0,
+      "description": "Conversions for template A"
+    },
+    "conversions_b": {
+      "type": "number",
+      "default": 0,
+      "description": "Conversions for template B"
+    },
+    "winner": {
+      "type": "string",
+      "enum": [
+        "a",
+        "b",
+        "inconclusive",
+        "pending"
+      ],
+      "default": "pending",
+      "description": "Declared winner"
+    },
+    "winning_reason": {
+      "type": "string",
+      "description": "AI-generated explanation of why the winner won"
+    },
+    "auto_promote_winner": {
+      "type": "boolean",
+      "default": false,
+      "description": "Automatically promote winner when test completes"
+    },
+    "target_sample_size": {
+      "type": "number",
+      "default": 50,
+      "description": "Sends per variant before declaring winner"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Target niche for this test"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "cold_email",
+        "follow_up_email",
+        "sms",
+        "other"
+      ],
+      "description": "Channel being tested"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ]
+}
