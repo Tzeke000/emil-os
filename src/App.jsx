@@ -37,6 +37,8 @@ import TokenWastePage from './pages/TokenWastePage';
 import ContextTrimAdvisor from './pages/ContextTrimAdvisor';
 import PlaybookExpander from './pages/PlaybookExpander';
 import TaskBatcher from './pages/TaskBatcher';
+import ReadMe from './pages/ReadMe';
+import Analytics from './pages/Analytics';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -91,6 +93,8 @@ const AuthenticatedApp = () => {
         <Route path="/context-trim" element={<ContextTrimAdvisor />} />
         <Route path="/playbook-expander" element={<PlaybookExpander />} />
         <Route path="/task-batcher" element={<TaskBatcher />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/readme" element={<ReadMe />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

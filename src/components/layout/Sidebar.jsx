@@ -5,7 +5,7 @@ import {
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
   GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal,
   Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked, GitCommit,
-  TrendingDown, Scissors, Wand2, Layers
+  TrendingDown, Scissors, Wand2, Layers, BarChart2
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,8 @@ const SECTIONS = [
     label: "Emil",
     items: [
       { path: "/",              icon: LayoutDashboard,  label: "Today" },
+      { path: "/analytics",     icon: BarChart2,        label: "Analytics" },
+      { path: "/readme",        icon: BookOpen,         label: "README" },
       { path: "/mind-state",    icon: Brain,            label: "Mind State" },
       { path: "/reflections",   icon: BookMarked,       label: "Reflections" },
       { path: "/identity",      icon: Fingerprint,      label: "Identity Core" },
