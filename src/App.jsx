@@ -26,6 +26,11 @@ import Workbench from './pages/Workbench';
 import ArchiveExplorer from './pages/ArchiveExplorer';
 import TriggerIntegrations from './pages/TriggerIntegrations';
 import LiveRuntimeLogs from './pages/LiveRuntimeLogs';
+import IdentityCorePage from './pages/IdentityCorePage';
+import MindStatePage from './pages/MindStatePage';
+import ReflectionsPage from './pages/ReflectionsPage';
+import RelationshipProfilePage from './pages/RelationshipProfilePage';
+import PreferencesPage from './pages/PreferencesPage';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -69,6 +74,11 @@ const AuthenticatedApp = () => {
         <Route path="/archive" element={<ArchiveExplorer />} />
         <Route path="/triggers" element={<TriggerIntegrations />} />
         <Route path="/logs" element={<LiveRuntimeLogs />} />
+        <Route path="/identity" element={<IdentityCorePage />} />
+        <Route path="/mind-state" element={<MindStatePage />} />
+        <Route path="/reflections" element={<ReflectionsPage />} />
+        <Route path="/relationship" element={<RelationshipProfilePage />} />
+        <Route path="/preferences" element={<PreferencesPage />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

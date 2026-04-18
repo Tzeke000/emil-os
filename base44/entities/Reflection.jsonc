@@ -1,0 +1,62 @@
+{
+  "name": "Reflection",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "reflection_type": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "task",
+        "failure",
+        "strategy"
+      ],
+      "description": "Type of reflection"
+    },
+    "trigger": {
+      "type": "string",
+      "description": "What prompted this reflection"
+    },
+    "what_happened": {
+      "type": "string",
+      "description": "What happened"
+    },
+    "what_worked": {
+      "type": "string",
+      "description": "What worked well"
+    },
+    "what_failed": {
+      "type": "string",
+      "description": "What failed or fell short"
+    },
+    "what_surprised": {
+      "type": "string",
+      "description": "What surprised Emil"
+    },
+    "what_learned": {
+      "type": "string",
+      "description": "What Emil learned"
+    },
+    "what_to_change": {
+      "type": "string",
+      "description": "What Emil should change next time"
+    },
+    "importance": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    }
+  },
+  "required": [
+    "date",
+    "reflection_type"
+  ]
+}

@@ -3,7 +3,8 @@ import {
   LayoutDashboard, Users, FileText, Inbox, Brain,
   GitBranch, ShieldCheck, Settings, ChevronLeft, ChevronRight,
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
-  GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal
+  GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal,
+  Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -12,41 +13,46 @@ import { base44 } from "@/api/base44Client";
 
 const SECTIONS = [
   {
-    label: "Operations",
+    label: "Emil",
     items: [
-      { path: "/", icon: LayoutDashboard, label: "Command" },
-      { path: "/prospects", icon: Users, label: "Prospects" },
-      { path: "/inbox", icon: Inbox, label: "Inbox", countKey: "inbox" },
-      { path: "/approvals", icon: ShieldCheck, label: "Approvals", countKey: "approvals" },
-      { path: "/templates", icon: FileText, label: "Templates" },
-      { path: "/playbooks", icon: GitBranch, label: "Playbooks" },
+      { path: "/",              icon: LayoutDashboard,  label: "Today" },
+      { path: "/mind-state",    icon: Brain,            label: "Mind State" },
+      { path: "/reflections",   icon: BookMarked,       label: "Reflections" },
+      { path: "/identity",      icon: Fingerprint,      label: "Identity Core" },
+      { path: "/relationship",  icon: Heart,            label: "Relationship" },
+      { path: "/preferences",   icon: SlidersHorizontal,label: "Preferences" },
     ]
   },
   {
-    label: "Runtime",
+    label: "Work",
     items: [
-      { path: "/tasks", icon: ListTodo, label: "Tasks", countKey: "tasks" },
-      { path: "/triggers", icon: Zap, label: "Triggers", countKey: "triggers" },
-      { path: "/modules", icon: Cpu, label: "Modules" },
-      { path: "/model-router", icon: Router, label: "Model Router" },
-      { path: "/logs", icon: Terminal, label: "Runtime Logs", countKey: "errors" },
+      { path: "/prospects",  icon: Users,       label: "Prospects" },
+      { path: "/inbox",      icon: Inbox,       label: "Inbox",      countKey: "inbox" },
+      { path: "/approvals",  icon: ShieldCheck, label: "Approvals",  countKey: "approvals" },
+      { path: "/templates",  icon: FileText,    label: "Templates" },
+      { path: "/playbooks",  icon: GitBranch,   label: "Playbooks" },
     ]
   },
   {
-    label: "Identity & Memory",
+    label: "Memory",
     items: [
-      { path: "/truth-sync", icon: RefreshCw, label: "Truth Sync", countKey: "conflicts" },
-      { path: "/memory", icon: Brain, label: "Active Memory" },
-      { path: "/memory-browser", icon: BookOpen, label: "Memory Browser" },
-      { path: "/memory-migration", icon: GitMerge, label: "Migration", countKey: "migrations" },
-      { path: "/archive", icon: Archive, label: "Archive" },
+      { path: "/memory",            icon: Sparkles,  label: "Active Memory" },
+      { path: "/memory-browser",    icon: BookOpen,  label: "Memory Browser" },
+      { path: "/memory-migration",  icon: GitMerge,  label: "Migration",    countKey: "migrations" },
+      { path: "/truth-sync",        icon: RefreshCw, label: "Truth Sync",   countKey: "conflicts" },
+      { path: "/archive",           icon: Archive,   label: "Archive" },
     ]
   },
   {
     label: "System",
     items: [
-      { path: "/workbench", icon: Wrench, label: "Workbench", countKey: "proposals" },
-      { path: "/settings", icon: Settings, label: "Settings" },
+      { path: "/tasks",        icon: ListTodo, label: "Tasks",       countKey: "tasks" },
+      { path: "/workbench",    icon: Wrench,   label: "Workbench",   countKey: "proposals" },
+      { path: "/modules",      icon: Cpu,      label: "Modules" },
+      { path: "/model-router", icon: Router,   label: "Model Router" },
+      { path: "/triggers",     icon: Zap,      label: "Triggers" },
+      { path: "/logs",         icon: Terminal, label: "Logs" },
+      { path: "/settings",     icon: Settings, label: "Settings" },
     ]
   }
 ];
@@ -54,10 +60,8 @@ const SECTIONS = [
 export default function Sidebar() {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
-  const [collapsedSections, setCollapsedSections] = useState({});
+  const [collapsedSections, setCollapsedSections] = useState({ System: true });
 
-  const { data: triggerIntegrations = [] } = useQuery({ queryKey: ["triggerIntegrations"], queryFn: () => base44.entities.TriggerIntegration.list("-created_date", 20), staleTime: 60000 });
-  const { data: runtimeLogs = [] } = useQuery({ queryKey: ["runtimeLogs"], queryFn: () => base44.entities.RuntimeLog.list("-created_date", 50), staleTime: 10000 });
   const { data: replies = [] } = useQuery({ queryKey: ["replies"], queryFn: () => base44.entities.Reply.list("-created_date", 50), staleTime: 30000 });
   const { data: approvals = [] } = useQuery({ queryKey: ["approvals"], queryFn: () => base44.entities.Approval.list("-created_date", 50), staleTime: 30000 });
   const { data: tasks = [] } = useQuery({ queryKey: ["tasks"], queryFn: () => base44.entities.Task.list("-created_date", 100), staleTime: 30000 });
@@ -66,14 +70,12 @@ export default function Sidebar() {
   const { data: proposals = [] } = useQuery({ queryKey: ["proposals"], queryFn: () => base44.entities.Proposal.list("-created_date", 50), staleTime: 30000 });
 
   const counts = {
-    inbox: replies.filter(r => r.status === "new").length,
-    approvals: approvals.filter(a => a.status === "pending").length,
-    tasks: tasks.filter(t => ["running","blocked","escalated"].includes(t.state)).length,
-    triggers: triggerIntegrations.filter(t => t.is_active).length,
-    conflicts: truthFiles.filter(f => f.sync_status === "conflict").length,
+    inbox:      replies.filter(r => r.status === "new").length,
+    approvals:  approvals.filter(a => a.status === "pending").length,
+    tasks:      tasks.filter(t => ["running","blocked","escalated"].includes(t.state)).length,
+    conflicts:  truthFiles.filter(f => f.sync_status === "conflict").length,
     migrations: migrations.filter(m => m.status === "pending_review").length,
-    proposals: proposals.filter(p => p.status === "pending_review").length,
-    errors: runtimeLogs.filter(l => l.level === "error").length,
+    proposals:  proposals.filter(p => p.status === "pending_review").length,
   };
 
   const toggleSection = (label) => setCollapsedSections(p => ({ ...p, [label]: !p[label] }));
@@ -91,20 +93,13 @@ export default function Sidebar() {
         {!collapsed && (
           <div>
             <p className="font-bold text-foreground text-sm tracking-tight leading-none">Emil OS</p>
-            <p className="text-xs text-muted-foreground leading-none mt-0.5 font-mono">Control Layer</p>
+            <p className="text-xs text-muted-foreground leading-none mt-0.5 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block mr-1 animate-pulse" />
+              online
+            </p>
           </div>
         )}
       </div>
-
-      {/* Agent status */}
-      {!collapsed && (
-        <div className="px-4 py-2 border-b border-sidebar-border flex-shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-mono text-muted-foreground">Agent online</span>
-          </div>
-        </div>
-      )}
 
       {/* Nav */}
       <nav className="flex-1 py-2 px-2 overflow-y-auto space-y-1">

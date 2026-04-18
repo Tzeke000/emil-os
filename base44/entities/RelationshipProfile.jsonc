@@ -1,0 +1,64 @@
+{
+  "name": "RelationshipProfile",
+  "type": "object",
+  "properties": {
+    "user_name": {
+      "type": "string"
+    },
+    "preferred_tone": {
+      "type": "string",
+      "enum": [
+        "direct",
+        "warm",
+        "formal",
+        "casual",
+        "concise"
+      ],
+      "description": "Preferred communication tone"
+    },
+    "preferred_update_style": {
+      "type": "string",
+      "enum": [
+        "bullet_points",
+        "narrative",
+        "minimal",
+        "detailed",
+        "structured"
+      ],
+      "description": "How the user prefers updates"
+    },
+    "desired_autonomy_level": {
+      "type": "string",
+      "enum": [
+        "high_autonomy",
+        "medium_autonomy",
+        "low_autonomy",
+        "always_ask"
+      ],
+      "description": "How much autonomy Emil should operate with"
+    },
+    "escalation_preferences": {
+      "type": "string",
+      "description": "When and how to escalate"
+    },
+    "recurring_priorities": {
+      "type": "string",
+      "description": "Ongoing standing priorities"
+    },
+    "current_priorities": {
+      "type": "string",
+      "description": "Active priorities right now"
+    },
+    "stress_points": {
+      "type": "string",
+      "description": "Things that cause friction or frustration"
+    },
+    "interaction_notes": {
+      "type": "string",
+      "description": "General notes about the relationship"
+    }
+  },
+  "required": [
+    "user_name"
+  ]
+}

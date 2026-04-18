@@ -1,0 +1,40 @@
+{
+  "name": "IdentityCore",
+  "type": "object",
+  "properties": {
+    "section": {
+      "type": "string",
+      "enum": [
+        "mission",
+        "core_values",
+        "communication_style",
+        "role_boundaries",
+        "optimizes_for",
+        "refuses_to",
+        "long_term_purpose",
+        "identity_notes"
+      ],
+      "description": "Which section of Emil's identity this record belongs to"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short label for this entry"
+    },
+    "content": {
+      "type": "string",
+      "description": "The actual identity content"
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order within the section"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "section",
+    "content"
+  ]
+}

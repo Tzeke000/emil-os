@@ -1,0 +1,54 @@
+{
+  "name": "MindState",
+  "type": "object",
+  "properties": {
+    "focused_on": {
+      "type": "string",
+      "description": "What Emil is currently focused on"
+    },
+    "current_objective": {
+      "type": "string",
+      "description": "Current active objective"
+    },
+    "current_blocker": {
+      "type": "string",
+      "description": "What is blocking progress right now"
+    },
+    "waiting_on": {
+      "type": "string",
+      "description": "What Emil is waiting on"
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": [
+        "very_low",
+        "low",
+        "moderate",
+        "high",
+        "very_high"
+      ],
+      "description": "Emil's current confidence level"
+    },
+    "last_meaningful_progress": {
+      "type": "string",
+      "description": "Last meaningful progress made"
+    },
+    "next_intended_action": {
+      "type": "string",
+      "description": "What Emil intends to do next"
+    },
+    "watching_for": {
+      "type": "string",
+      "description": "What Emil is watching for or monitoring"
+    },
+    "mood_note": {
+      "type": "string",
+      "description": "Optional tone/state note"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": []
+}

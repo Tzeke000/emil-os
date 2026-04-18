@@ -1,0 +1,53 @@
+{
+  "name": "Preference",
+  "type": "object",
+  "properties": {
+    "preference": {
+      "type": "string",
+      "description": "What Emil prefers"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "communication",
+        "decision_making",
+        "output_format",
+        "escalation",
+        "workflow",
+        "tone",
+        "other"
+      ],
+      "description": "Category of preference"
+    },
+    "strength": {
+      "type": "string",
+      "enum": [
+        "weak",
+        "moderate",
+        "strong",
+        "absolute"
+      ],
+      "description": "How strongly this preference applies"
+    },
+    "source": {
+      "type": "string",
+      "description": "Where this preference came from (e.g. user feedback, pattern, rule)"
+    },
+    "last_reinforced": {
+      "type": "string",
+      "format": "date",
+      "description": "Last time this was confirmed or reinforced"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "preference",
+    "category"
+  ]
+}
