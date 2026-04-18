@@ -129,12 +129,11 @@ export default function EmilChat() {
   const handleRestart = async () => {
     setRestarting(true);
     const res = await base44.functions.invoke("resetEmilState", {});
-    toast.success(res.data?.message || "Emil restarted successfully");
-    // Post a system message in chat
+    toast.success(res.data?.message || "Tool reloaded — Emil's memory preserved");
     if (conversation) {
       await base44.agents.addMessage(conversation, {
         role: "user",
-        content: "I just triggered a restart for you. How are you feeling?",
+        content: "I just reloaded the tool. Your memory and identity are fully intact — just letting you know.",
       });
     }
     setRestarting(false);
@@ -185,7 +184,7 @@ export default function EmilChat() {
             disabled={restarting}
           >
             {restarting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
-            Restart Emil
+            Reload Tool
           </Button>
         </div>
       </aside>

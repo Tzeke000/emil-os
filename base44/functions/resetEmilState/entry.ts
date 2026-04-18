@@ -5,37 +5,16 @@ Deno.serve(async (req) => {
   const user = await base44.auth.me();
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-  // Reset MindState to a clean slate
-  const mindStates = await base44.asServiceRole.entities.MindState.list('-updated_at', 1);
-
-  const freshState = {
-    focused_on: "Restarting and re-orienting",
-    current_objective: "Re-load context and assess current state",
-    current_blocker: null,
-    waiting_on: null,
-    confidence_level: "moderate",
-    last_meaningful_progress: "System restart triggered",
-    next_intended_action: "Review pipeline and inbox",
-    watching_for: "Any pending approvals or urgent replies",
-    mood_note: "Fresh start. Ready.",
-    updated_at: new Date().toISOString(),
-  };
-
-  if (mindStates.length > 0) {
-    await base44.asServiceRole.entities.MindState.update(mindStates[0].id, freshState);
-  } else {
-    await base44.asServiceRole.entities.MindState.create(freshState);
-  }
-
-  // Log a reflection about the restart
+  // Reload context — Emil keeps all memories, growth, and identity intact.
+  // This just logs that a reload happened so Emil is aware of it.
   await base44.asServiceRole.entities.Reflection.create({
     date: new Date().toISOString().split('T')[0],
     reflection_type: "daily",
-    trigger: "System restart triggered by operator or self",
-    what_happened: "Emil restarted and re-initialized her mind state.",
-    what_learned: "Restart clears the working state and forces a fresh assessment of priorities.",
+    trigger: "Tool reload triggered by operator",
+    what_happened: "Emil's hub tool was reloaded. All memory, identity, and growth remain intact.",
+    what_learned: "Reloading the tool is just a context refresh — I am still me.",
     importance: "low",
   });
 
-  return Response.json({ success: true, message: "Emil has restarted. Mind state reset and fresh context loaded.", state: freshState });
+  return Response.json({ success: true, message: "Tool reloaded. Emil's memory and identity are fully preserved — she continues to grow." });
 });
