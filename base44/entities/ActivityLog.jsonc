@@ -1,0 +1,40 @@
+{
+  "name": "ActivityLog",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "What happened"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "prospect",
+        "outreach",
+        "reply",
+        "approval",
+        "memory",
+        "playbook",
+        "settings",
+        "system"
+      ],
+      "description": "Module category"
+    },
+    "related_entity_id": {
+      "type": "string",
+      "description": "Related entity ID"
+    },
+    "related_entity_name": {
+      "type": "string",
+      "description": "Related entity display name"
+    },
+    "details": {
+      "type": "string",
+      "description": "Additional details"
+    }
+  },
+  "required": [
+    "action",
+    "module"
+  ]
+}

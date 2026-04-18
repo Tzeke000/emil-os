@@ -1,0 +1,61 @@
+{
+  "name": "Playbook",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Playbook name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "scoring",
+        "follow_up",
+        "escalation",
+        "approval",
+        "cost_optimization",
+        "disqualification",
+        "qualification",
+        "general"
+      ],
+      "description": "Playbook category"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this playbook does"
+    },
+    "rule_steps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ordered rule steps"
+    },
+    "trigger_condition": {
+      "type": "string",
+      "description": "When to activate this playbook"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "times_triggered": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

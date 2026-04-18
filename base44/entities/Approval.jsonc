@@ -1,0 +1,55 @@
+{
+  "name": "Approval",
+  "type": "object",
+  "properties": {
+    "item_type": {
+      "type": "string",
+      "enum": [
+        "risky_reply",
+        "pricing_change",
+        "refund",
+        "sensitive_language",
+        "strategy_shift",
+        "unusual_request",
+        "high_value_outreach",
+        "other"
+      ],
+      "description": "Type of item"
+    },
+    "linked_prospect_id": {
+      "type": "string",
+      "description": "Related prospect ID"
+    },
+    "linked_prospect_name": {
+      "type": "string",
+      "description": "Related prospect name"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for escalation"
+    },
+    "proposed_action": {
+      "type": "string",
+      "description": "What Emil proposes to do"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "denied",
+        "deferred"
+      ],
+      "description": "Approval status"
+    },
+    "reviewer_notes": {
+      "type": "string",
+      "description": "Notes from reviewer"
+    }
+  },
+  "required": [
+    "item_type",
+    "reason",
+    "proposed_action"
+  ]
+}

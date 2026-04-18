@@ -1,0 +1,68 @@
+{
+  "name": "ApprovalItem",
+  "type": "object",
+  "properties": {
+    "item_type": {
+      "type": "string",
+      "enum": [
+        "risky_reply",
+        "pricing_change",
+        "refund",
+        "sensitive_language",
+        "strategy_shift",
+        "unusual_request",
+        "other"
+      ],
+      "description": "Type of item"
+    },
+    "linked_prospect_id": {
+      "type": "string",
+      "description": "Linked prospect ID"
+    },
+    "linked_prospect_name": {
+      "type": "string",
+      "description": "Prospect name for display"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Why this needs approval"
+    },
+    "proposed_action": {
+      "type": "string",
+      "description": "What Emil wants to do"
+    },
+    "context": {
+      "type": "string",
+      "description": "Background context"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "denied",
+        "deferred"
+      ],
+      "default": "pending"
+    },
+    "reviewer_notes": {
+      "type": "string",
+      "description": "Notes from reviewer"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    }
+  },
+  "required": [
+    "item_type",
+    "reason",
+    "proposed_action"
+  ]
+}

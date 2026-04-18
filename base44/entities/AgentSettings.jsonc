@@ -1,0 +1,59 @@
+{
+  "name": "AgentSettings",
+  "type": "object",
+  "properties": {
+    "agent_name": {
+      "type": "string",
+      "default": "Emil"
+    },
+    "default_niche": {
+      "type": "string"
+    },
+    "default_offer": {
+      "type": "string"
+    },
+    "pricing": {
+      "type": "string"
+    },
+    "daily_prospect_target": {
+      "type": "number",
+      "default": 20
+    },
+    "daily_outreach_target": {
+      "type": "number",
+      "default": 15
+    },
+    "token_saving_mode": {
+      "type": "boolean",
+      "default": true
+    },
+    "automation_mode": {
+      "type": "boolean",
+      "default": false
+    },
+    "approval_threshold_score": {
+      "type": "number",
+      "default": 50
+    },
+    "approval_threshold_value": {
+      "type": "number",
+      "default": 500
+    },
+    "model_routing_notes": {
+      "type": "string"
+    },
+    "communication_rules": {
+      "type": "string"
+    },
+    "active_milestone": {
+      "type": "string"
+    },
+    "revenue_collected": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "agent_name"
+  ]
+}

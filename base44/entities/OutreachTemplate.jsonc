@@ -1,0 +1,89 @@
+{
+  "name": "OutreachTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Template name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "cold_email",
+        "follow_up_email",
+        "sms",
+        "voicemail_script",
+        "objection_handling",
+        "payment_request",
+        "check_in",
+        "re_engagement"
+      ],
+      "description": "Template category"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "cold_email",
+        "follow_up_email",
+        "sms",
+        "voicemail_script",
+        "objection_handling",
+        "payment_request",
+        "check_in",
+        "re_engagement"
+      ],
+      "description": "Channel type"
+    },
+    "offer_type": {
+      "type": "string",
+      "description": "Associated offer type"
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "professional",
+        "friendly",
+        "urgent",
+        "casual",
+        "direct"
+      ],
+      "description": "Tone"
+    },
+    "body": {
+      "type": "string",
+      "description": "Template body with {{variables}}"
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Placeholder variables used"
+    },
+    "approved": {
+      "type": "boolean",
+      "description": "Whether template is approved"
+    },
+    "last_used_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Last used"
+    },
+    "performance_notes": {
+      "type": "string",
+      "description": "Performance notes"
+    },
+    "times_used": {
+      "type": "number",
+      "description": "Number of times used"
+    },
+    "reply_rate": {
+      "type": "number",
+      "description": "Reply rate percentage"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "name": "Prospect",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string",
+      "description": "Name of the business"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact name"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Business niche/industry"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "state": {
+      "type": "string",
+      "description": "State"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "lead_source": {
+      "type": "string",
+      "enum": [
+        "google_maps",
+        "yelp",
+        "referral",
+        "cold_scrape",
+        "directory",
+        "social_media",
+        "other"
+      ],
+      "description": "Where the lead was found"
+    },
+    "score": {
+      "type": "number",
+      "description": "Lead score 0-100"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "found",
+        "scored",
+        "ready_for_outreach",
+        "contacted",
+        "follow_up_due",
+        "replied",
+        "interested",
+        "closed_won",
+        "closed_lost",
+        "archived"
+      ],
+      "default": "found"
+    },
+    "personalized_notes": {
+      "type": "string",
+      "description": "Notes for personalization"
+    },
+    "last_contacted_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date last contacted"
+    },
+    "next_follow_up_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Next follow-up date"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for filtering"
+    },
+    "assigned_offer": {
+      "type": "string",
+      "description": "Which offer is assigned"
+    },
+    "objections": {
+      "type": "string",
+      "description": "Known objections"
+    },
+    "outcome": {
+      "type": "string",
+      "description": "Final outcome notes"
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Activity timeline"
+    }
+  },
+  "required": [
+    "business_name"
+  ]
+}

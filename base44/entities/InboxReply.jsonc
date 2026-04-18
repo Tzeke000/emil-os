@@ -1,0 +1,71 @@
+{
+  "name": "InboxReply",
+  "type": "object",
+  "properties": {
+    "prospect_id": {
+      "type": "string",
+      "description": "Linked prospect ID"
+    },
+    "prospect_name": {
+      "type": "string",
+      "description": "Prospect business name for display"
+    },
+    "reply_text": {
+      "type": "string",
+      "description": "The reply content"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "phone",
+        "voicemail",
+        "other"
+      ],
+      "description": "Channel of reply"
+    },
+    "date_received": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the reply was received"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "interested",
+        "not_now",
+        "wrong_contact",
+        "question",
+        "price_objection",
+        "no_thanks",
+        "spam",
+        "needs_human_review"
+      ],
+      "description": "Reply classification"
+    },
+    "suggested_response": {
+      "type": "string",
+      "description": "AI-suggested response"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed",
+        "responded",
+        "escalated",
+        "archived"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "prospect_name",
+    "reply_text"
+  ]
+}

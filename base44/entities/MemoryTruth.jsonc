@@ -1,0 +1,58 @@
+{
+  "name": "MemoryTruth",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Memory key identifier"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "business_model",
+        "niche",
+        "offer",
+        "pricing",
+        "milestone",
+        "blocker",
+        "strategy_rule",
+        "script_angle",
+        "next_action",
+        "distilled_update",
+        "archived_truth"
+      ],
+      "description": "Category of memory"
+    },
+    "value": {
+      "type": "string",
+      "description": "The stored truth/context value"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "last_distilled": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "type": "string",
+      "description": "Where this truth came from"
+    }
+  },
+  "required": [
+    "key",
+    "category",
+    "value"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Memory",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "business_model",
+        "niche",
+        "offer",
+        "pricing",
+        "milestone",
+        "blocker",
+        "strategic_rule",
+        "script_angle",
+        "next_action",
+        "distilled_update",
+        "archived_truth"
+      ],
+      "description": "Memory category"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Memory content"
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Whether this is current active truth"
+    },
+    "priority": {
+      "type": "number",
+      "description": "Priority 1-5"
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date",
+      "description": "Last verified date"
+    }
+  },
+  "required": [
+    "category",
+    "title",
+    "content"
+  ]
+}

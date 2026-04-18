@@ -1,0 +1,70 @@
+{
+  "name": "Reply",
+  "type": "object",
+  "properties": {
+    "prospect_id": {
+      "type": "string",
+      "description": "Linked prospect ID"
+    },
+    "prospect_name": {
+      "type": "string",
+      "description": "Prospect business name for display"
+    },
+    "reply_text": {
+      "type": "string",
+      "description": "Reply content"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "voicemail",
+        "other"
+      ],
+      "description": "Reply channel"
+    },
+    "date_received": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date received"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "interested",
+        "not_now",
+        "wrong_contact",
+        "question",
+        "price_objection",
+        "no_thanks",
+        "spam",
+        "needs_human_review"
+      ],
+      "description": "Reply classification"
+    },
+    "suggested_response": {
+      "type": "string",
+      "description": "AI suggested response"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "description": "Whether this needs approval before responding"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_review",
+        "responded",
+        "escalated",
+        "archived"
+      ],
+      "description": "Reply handling status"
+    }
+  },
+  "required": [
+    "prospect_name",
+    "reply_text"
+  ]
+}
