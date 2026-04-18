@@ -5,7 +5,7 @@ import {
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
   GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal,
   Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked, GitCommit,
-  TrendingDown, Scissors, Wand2
+  TrendingDown, Scissors, Wand2, Layers
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -51,6 +51,7 @@ const SECTIONS = [
       { path: "/token-waste",       icon: TrendingDown,  label: "Token Waste Log" },
       { path: "/context-trim",      icon: Scissors,      label: "Context Trim" },
       { path: "/playbook-expander", icon: GitBranch,     label: "Playbook Expander" },
+      { path: "/task-batcher",      icon: Layers,        label: "Task Batcher" },
     ]
   },
   {

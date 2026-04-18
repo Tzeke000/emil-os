@@ -36,6 +36,7 @@ import PromptOptimizer from './pages/PromptOptimizer';
 import TokenWastePage from './pages/TokenWastePage';
 import ContextTrimAdvisor from './pages/ContextTrimAdvisor';
 import PlaybookExpander from './pages/PlaybookExpander';
+import TaskBatcher from './pages/TaskBatcher';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -89,6 +90,7 @@ const AuthenticatedApp = () => {
         <Route path="/token-waste" element={<TokenWastePage />} />
         <Route path="/context-trim" element={<ContextTrimAdvisor />} />
         <Route path="/playbook-expander" element={<PlaybookExpander />} />
+        <Route path="/task-batcher" element={<TaskBatcher />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
