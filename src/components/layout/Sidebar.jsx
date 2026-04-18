@@ -4,7 +4,8 @@ import {
   GitBranch, ShieldCheck, Settings, ChevronLeft, ChevronRight,
   Activity, RefreshCw, Cpu, Router, ListTodo, BookOpen,
   GitMerge, Wrench, Archive, ChevronDown, ChevronUp, Zap, Terminal,
-  Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked, GitCommit
+  Fingerprint, Heart, SlidersHorizontal, Sparkles, BookMarked, GitCommit,
+  TrendingDown, Scissors, Wand2
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,15 @@ const SECTIONS = [
     ]
   },
   {
+    label: "Efficiency",
+    items: [
+      { path: "/prompt-optimizer",  icon: Wand2,        label: "Prompt Optimizer" },
+      { path: "/token-waste",       icon: TrendingDown,  label: "Token Waste Log" },
+      { path: "/context-trim",      icon: Scissors,      label: "Context Trim" },
+      { path: "/playbook-expander", icon: GitBranch,     label: "Playbook Expander" },
+    ]
+  },
+  {
     label: "System",
     items: [
       { path: "/tasks",        icon: ListTodo, label: "Tasks",       countKey: "tasks" },
@@ -61,7 +71,7 @@ const SECTIONS = [
 export default function Sidebar() {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
-  const [collapsedSections, setCollapsedSections] = useState({ System: true });
+  const [collapsedSections, setCollapsedSections] = useState({ System: true, Efficiency: true });
 
   const { data: replies = [] } = useQuery({ queryKey: ["replies"], queryFn: () => base44.entities.Reply.list("-created_date", 50), staleTime: 30000 });
   const { data: approvals = [] } = useQuery({ queryKey: ["approvals"], queryFn: () => base44.entities.Approval.list("-created_date", 50), staleTime: 30000 });

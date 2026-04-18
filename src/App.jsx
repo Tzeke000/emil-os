@@ -32,6 +32,10 @@ import ReflectionsPage from './pages/ReflectionsPage';
 import RelationshipProfilePage from './pages/RelationshipProfilePage';
 import PreferencesPage from './pages/PreferencesPage';
 import EvolutionLogPage from './pages/EvolutionLogPage';
+import PromptOptimizer from './pages/PromptOptimizer';
+import TokenWastePage from './pages/TokenWastePage';
+import ContextTrimAdvisor from './pages/ContextTrimAdvisor';
+import PlaybookExpander from './pages/PlaybookExpander';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -81,6 +85,10 @@ const AuthenticatedApp = () => {
         <Route path="/relationship" element={<RelationshipProfilePage />} />
         <Route path="/preferences" element={<PreferencesPage />} />
         <Route path="/evolution" element={<EvolutionLogPage />} />
+        <Route path="/prompt-optimizer" element={<PromptOptimizer />} />
+        <Route path="/token-waste" element={<TokenWastePage />} />
+        <Route path="/context-trim" element={<ContextTrimAdvisor />} />
+        <Route path="/playbook-expander" element={<PlaybookExpander />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
