@@ -9,6 +9,7 @@ import {
 import StatusBadge from "../components/shared/StatusBadge";
 import PresencePanel from "../components/dashboard/PresencePanel";
 import EvolutionWidget from "../components/dashboard/EvolutionWidget";
+import AgentHealthPanel from "../components/dashboard/AgentHealthPanel";
 
 function getNextBestAction(prospects, replies, approvals) {
   const pendingApprovals = approvals.filter(a => a.status === "pending");
@@ -199,6 +200,9 @@ export default function Dashboard() {
           </div>
         </WidgetPanel>
       )}
+
+      {/* Agent Health */}
+      <AgentHealthPanel />
 
       {/* Evolution Widget */}
       <EvolutionWidget />
